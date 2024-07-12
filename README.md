@@ -17,4 +17,4 @@ Users of the application can:
 * Insert a new user into the users table 
 * Update a user 
 * Delete an item 
-* [A functionality of your choice – must be a CRUD operation or cooler] 
+* [A functionality of your choice – must be a CRUD operation or cooler]
