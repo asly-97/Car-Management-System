@@ -4,10 +4,12 @@ import io.javalin.Javalin;
 import net.revature.dao.PersonDAO;
 import net.revature.model.Person;
 import net.revature.service.PersonService;
+import net.revature.util.ConnectionUtil;
 import net.revature.util.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -19,7 +21,12 @@ public class Main {
 
         app.get("/",ctx -> ctx.result("Welcome to Revature"));
 
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = null;
+        try {
+            con = ConnectionUtil.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         PersonDAO personDAO = new PersonDAO(con);
         PersonService personService = new PersonService(personDAO);
 
