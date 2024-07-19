@@ -8,6 +8,20 @@ public class Car {
     private String color;
     private Person owner;
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Car() {
+    }
+
+    public Car(String make, String model, byte passengers, String color) {
+        this.make = make;
+        this.model = model;
+        this.passengers = passengers;
+        this.color = color;
+    }
+
     public Car(int id, String make, String model, byte passengers, String color) {
         this.id = id;
         this.make = make;

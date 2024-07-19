@@ -1,6 +1,8 @@
 package net.revature;
 
 import io.javalin.Javalin;
+import net.revature.controller.CarController;
+import net.revature.controller.PersonController;
 import net.revature.dao.PersonDAO;
 import net.revature.model.Person;
 import net.revature.service.PersonService;
@@ -21,19 +23,26 @@ public class Main {
 
         app.get("/",ctx -> ctx.result("Welcome to Revature"));
 
-        Connection con = null;
-        try {
-            con = ConnectionUtil.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        PersonDAO personDAO = new PersonDAO(con);
-        PersonService personService = new PersonService(personDAO);
 
-        app.get("/person",ctx->{
-            List<Person> personList = personService.getAllPerson();
-            ctx.json(personList);
-        });
+        //person endpoints handling
+        PersonController pc = new PersonController();
+        app.get("/person",pc.getAllPersonHandler);
+        app.get("/person/{id}",pc.getPersonByIdHandler);
+        app.post("/person",pc.addPerson);
+        app.delete("/person/{id}",pc.deletePersonByIdHandler);
+        app.put("/person/{id}",pc.updatePerson);
+
+
+        //cars endpoints
+        CarController cc = new CarController();
+        app.get("/car",cc.getAllCarsHandler);
+        app.get("/car/{id}",cc.getCarById);
+        app.get("/person/{id}/car",cc.getCarsByOwnerId);
+        app.patch("/car/{car_id}/assign_owner/{person_id}",cc.assignCarOwnerHandler);
+        app.post("/car",cc.addNewCarHandler);
+        app.delete("/car/{id}",cc.deleteCarController);
+
+
 
 
 
