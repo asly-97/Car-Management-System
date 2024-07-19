@@ -1,4 +1,4 @@
-package net.revature.exception.person;
+package net.revature.exception.auth;
 
 public class InvalidAdminCredentialsException extends Exception {
     public InvalidAdminCredentialsException() {

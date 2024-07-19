@@ -1,6 +1,7 @@
 package net.revature;
 
 import io.javalin.Javalin;
+import net.revature.controller.AuthController;
 import net.revature.controller.CarController;
 import net.revature.controller.PersonController;
 import net.revature.dao.PersonDAO;
@@ -41,6 +42,12 @@ public class Main {
         app.patch("/car/{car_id}/assign_owner/{person_id}",cc.assignCarOwnerHandler);
         app.post("/car",cc.addNewCarHandler);
         app.delete("/car/{id}",cc.deleteCarController);
+
+
+        //Admin authentication endpoints
+        AuthController ac = new AuthController();
+        app.post("/admin_auth",ac.adminAuthHandler);
+        app.get("/admin_auth/logout",ac.adminLogoutHandler);
 
 
 

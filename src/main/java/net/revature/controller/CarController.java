@@ -1,6 +1,7 @@
 package net.revature.controller;
 
 import io.javalin.http.Handler;
+import net.revature.exception.auth.AdminPrivilegesRequiredException;
 import net.revature.exception.car.CarNotFoundException;
 import net.revature.exception.person.PersonNotFoundException;
 import net.revature.model.Car;
@@ -53,6 +54,12 @@ public class CarController {
     };
 
     public Handler assignCarOwnerHandler = ctx -> {
+
+        // Only authenticated admin can perform this operation
+        if (!AuthController.ensureAdminLoggedIn(ctx)) {
+            return; // Stop further processing if admin is not logged in
+        }
+
         int carId = Integer.parseInt(ctx.pathParam("car_id"));
         int ownerId = Integer.parseInt(ctx.pathParam("person_id"));
 
@@ -80,6 +87,11 @@ public class CarController {
     };
 
     public Handler deleteCarController= ctx -> {
+
+        // Only authenticated admin can perform this operation
+        if (!AuthController.ensureAdminLoggedIn(ctx)) {
+            return; // Stop further processing if admin is not logged in
+        }
 
         int car_id = Integer.parseInt(ctx.pathParam("id"));
 

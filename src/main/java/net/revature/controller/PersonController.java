@@ -54,6 +54,11 @@ public class PersonController {
 
     public Handler deletePersonByIdHandler= ctx -> {
 
+        // Only authenticated admin can perform this operation
+        if (!AuthController.ensureAdminLoggedIn(ctx)) {
+            return; // Stop further processing if admin is not logged in
+        }
+
         int personId = Integer.parseInt(ctx.pathParam("id"));
 
         personService.deletePersonById(personId);
